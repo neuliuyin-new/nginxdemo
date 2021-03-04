@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: spinnaker-demo-config
+  name: nginxdemo-config
   namespace: default
 data:
   NEW_FEATURE: "true"
@@ -11,23 +11,23 @@ data:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: spinnaker-demo
+  name: nginxdemo
   namespace: default
   labels:
     source: demo
     stack: frontend
-    app: spinnaker
+    app: nginxdemo
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       source: demo
-      app: spinnaker
+      app: nginxdemo
   template:
     metadata:
       labels:
         source: demo
-        app: spinnaker
+        app: nginxdemo
     spec:
       containers:
       - name: primary
@@ -47,12 +47,12 @@ spec:
 kind: Service
 apiVersion: v1
 metadata:
-  name: spinnaker-demo
+  name: nginxdemo
   namespace: default
 spec:
   selector:
     source: demo
-    app: spinnaker
+    app: nginxdemo
   ports:
   - protocol: TCP
     port: 80
