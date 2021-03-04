@@ -40,7 +40,7 @@ spec:
             port: 80
         envFrom:
         - configMapRef:
-            name: spinnaker-demo-config
+            name: nginxdemo-config
 
 ---
 
