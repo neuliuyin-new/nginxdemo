@@ -18,7 +18,7 @@ metadata:
     stack: frontend
     app: nginxdemo
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       source: demo
