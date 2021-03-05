@@ -4,7 +4,7 @@ metadata:
   name: nginxdemo-config
   namespace: default
 data:
-  NEW_FEATURE: "true"
+  NEW_FEATURE: "true1"
 
 ---
 
