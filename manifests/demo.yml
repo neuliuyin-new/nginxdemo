@@ -18,7 +18,7 @@ metadata:
     stack: frontend
     app: nginxdemo
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
       source: demo
@@ -33,7 +33,7 @@ spec:
       - name: primary
         image: index.docker.io/neuliuyin/nginxdemo
         ports:
-        - containerPort: 8000
+        - containerPort: 80
         readinessProbe:
           httpGet:
             path: /
