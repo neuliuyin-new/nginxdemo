@@ -7,7 +7,6 @@ data:
   NEW_FEATURE: "true"
 
 ---
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -43,7 +42,41 @@ spec:
             name: nginxdemo-config
 
 ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: anotherdemo
+  namespace: default
+  labels:
+    source: demo
+    stack: backend
+    app: anotherdemo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      source: demo
+      app: anotherdemo
+  template:
+    metadata:
+      labels:
+        source: demo
+        app: anotherdemo
+    spec:
+      containers:
+      - name: primary
+        image: index.docker.io/neuliuyin/nginxdemo
+        ports:
+        - containerPort: 80
+        readinessProbe:
+          httpGet:
+            path: /
+            port: 80
+        envFrom:
+        - configMapRef:
+            name: nginxdemo-config
 
+---
 kind: Service
 apiVersion: v1
 metadata:
@@ -53,6 +86,21 @@ spec:
   selector:
     source: demo
     app: nginxdemo
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 80
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: anotherdemo
+  namespace: default
+spec:
+  selector:
+    source: demo
+    app: anotherdemo
   ports:
   - protocol: TCP
     port: 80
